@@ -12,6 +12,17 @@ app.get('/', function(req, res){
   res.send('Welcome to my Amazon Web Scraper API')
 })
 
+// GET Product Details
+// test URL: http://localhost:3000/products/B09JQWSQK7
+app.get('/products/:productId', async (req,res) => {
+  const { productId } = req.params
 
+  try {
+    const response = await request(`${baseUrl}&url=https://www.amazon.com/dp/${productId}`)
+    res.json(JSON.parse(response))
+  } catch(error) {
+    res.json(error)
+  }
+})
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
